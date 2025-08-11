@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>52e31010-08f3-471f-8d65-ee75e84d8d33</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>CIS261_Course_Project.py</StartupFile>
+    <StartupFile>week5.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CIS261_Course_Project.py" />
+    <Compile Include="week5.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
