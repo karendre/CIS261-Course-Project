@@ -2,8 +2,6 @@
 # Course: CIS261
 # Week 5, Course Project Part 2 - Using Lists and Dictionaries to Store and Retrieve Data
 
-FILENAME = "employee.txt"   # from|to|name|hours|rate|tax
-
 def get_dates():
     while True:
         frm = input("Enter FROM date (mm/dd/yyyy) (or 'End' to finish): ")
@@ -21,6 +19,7 @@ def get_dates():
         else:
             print("Dates must be in mm/dd/yyyy. Try again.\n")
 
+# --- per-employee display and math ---
 def show_emp(frm, to, name, hrs, rate, tax):
     gross = hrs * rate
     inc_tax = gross * tax
@@ -37,6 +36,7 @@ def show_emp(frm, to, name, hrs, rate, tax):
     print("Net Pay: $", format(net, ".2f"))
     return gross, inc_tax, net
 
+# --- totals from dictionary ---
 def show_totals(tot):
     print("\n=== Totals ===")
     print("Employees:", tot["employees"])
@@ -46,14 +46,14 @@ def show_totals(tot):
     print("Total Net: $", format(tot["total_net"], ".2f"))
 
 def main():
-    # parallel lists for this run
+    # parallel lists
     from_dates, to_dates = [], []
     names, hours, rates, taxes = [], [], [], []
 
     print("Payroll Program (enter at least 5 employees)\n")
 
     while True:
-        frm, to, stop = get_dates()  # must be first call in loop
+        frm, to, stop = get_dates()      # required first call
         if stop:
             break
 
@@ -61,13 +61,10 @@ def main():
         if name.lower() == "end":
             break
 
-        try:
-            hrs = float(input("Enter total hours worked: "))
-            rate = float(input("Enter hourly rate: "))
-            tax = float(input("Enter income tax rate (e.g., 0.15 for 15%): "))
-        except ValueError:
-            print("Invalid number entered. Start this employee over.\n")
-            continue
+        # inline inputs (no helper functions)
+        hrs = float(input("Enter total hours worked: "))
+        rate = float(input("Enter hourly rate: "))
+        tax = float(input("Enter income tax rate (e.g., 0.15 for 15%): "))
 
         from_dates.append(frm)
         to_dates.append(to)
@@ -77,21 +74,9 @@ def main():
         taxes.append(tax)
         print("Saved.\n")
 
-        # write one pipe-delimited record to the text file
-        try:
-            with open(FILENAME, "a", encoding="utf-8") as f:
-                f.write(f"{frm}|{to}|{name}|{hrs}|{rate}|{tax}\n")
-        except OSError:
-            print("(Could not write to employee.txt)")
-
-    # totals dictionary for this run
-    totals = {
-        "employees": 0,
-        "total_hours": 0.0,
-        "total_gross": 0.0,
-        "total_tax": 0.0,
-        "total_net": 0.0
-    }
+    # process all employees and build totals dict
+    totals = {"employees": 0, "total_hours": 0.0, "total_gross": 0.0,
+              "total_tax": 0.0, "total_net": 0.0}
 
     i = 0
     while i < len(names):
@@ -107,5 +92,4 @@ def main():
 
     show_totals(totals)
 
-if __name__ == "__main__":
-    main()
+main()
