@@ -1,4 +1,4 @@
-# Name:  Ka Yan Dreibelbis
+# Name: Ka Yan Dreibelbis
 # Course: CIS261
 # Week 5, Course Project Part 2 - Using Lists and Dictionaries to Store and Retrieve Data
 
@@ -35,6 +35,7 @@ def show_emp(frm, to, name, hrs, rate, tax):
     print("Tax Rate:", format(tax * 100, ".1f"), "%")
     print("Income Tax: $", format(inc_tax, ".2f"))
     print("Net Pay: $", format(net, ".2f"))
+
     return gross, inc_tax, net
 
 def show_totals(tot):
@@ -45,12 +46,8 @@ def show_totals(tot):
     print("Total Tax: $", format(tot["total_tax"], ".2f"))
     print("Total Net: $", format(tot["total_net"], ".2f"))
 
-def main():
-    # parallel lists for this run
-    from_dates, to_dates = [], []
-    names, hours, rates, taxes = [], [], [], []
-
-    print("Payroll Program (enter at least 2 employees)\n")
+def data_entry():
+    print("Payroll Program (enter at least 5 employees)\n")
 
     while True:
         frm, to, stop = get_dates()  # must be first call in loop
@@ -69,22 +66,16 @@ def main():
             print("Invalid number entered. Start this employee over.\n")
             continue
 
-        from_dates.append(frm)
-        to_dates.append(to)
-        names.append(name)
-        hours.append(hrs)
-        rates.append(rate)
-        taxes.append(tax)
+        # write one pipe-delimited record to the text file
+        with open(FILENAME, "a", encoding="utf-8") as f:
+            f.write(f"{frm}|{to}|{name}|{hrs}|{rate}|{tax}\n")
+
         print("Saved.\n")
 
-        # write one pipe-delimited record to the text file
-        try:
-            with open(FILENAME, "a", encoding="utf-8") as f:
-                f.write(f"{frm}|{to}|{name}|{hrs}|{rate}|{tax}\n")
-        except OSError:
-            print("(Could not write to employee.txt)")
+def run_report():
+    # ask user which report to run
+    choice = input("\nEnter FROM date (mm/dd/yyyy) to filter, or type 'All': ").strip()
 
-    # totals dictionary for this run
     totals = {
         "employees": 0,
         "total_hours": 0.0,
@@ -93,19 +84,37 @@ def main():
         "total_net": 0.0
     }
 
-    i = 0
-    while i < len(names):
-        g, tax_amt, net_amt = show_emp(
-            from_dates[i], to_dates[i], names[i], hours[i], rates[i], taxes[i]
-        )
-        totals["employees"] += 1
-        totals["total_hours"] += hours[i]
-        totals["total_gross"] += g
-        totals["total_tax"] += tax_amt
-        totals["total_net"] += net_amt
-        i += 1
+    try:
+        with open(FILENAME, "r", encoding="utf-8") as f:
+            for line in f:
+                parts = line.strip().split("|")
+                if len(parts) != 6:
+                    continue  # skip bad lines
+
+                frm, to, name, s_hrs, s_rate, s_tax = parts
+                hrs = float(s_hrs)
+                rate = float(s_rate)
+                tax = float(s_tax)
+
+                if choice.lower() != "all" and frm != choice:
+                    continue  # skip if not matching
+
+                g, tax_amt, net_amt = show_emp(frm, to, name, hrs, rate, tax)
+
+                totals["employees"] += 1
+                totals["total_hours"] += hrs
+                totals["total_gross"] += g
+                totals["total_tax"] += tax_amt
+                totals["total_net"] += net_amt
+    except FileNotFoundError:
+        print("No employee.txt file found yet.")
+        return
 
     show_totals(totals)
+
+def main():
+    data_entry()
+    run_report()
 
 if __name__ == "__main__":
     main()
