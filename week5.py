@@ -1,6 +1,6 @@
 # Name: Ka Yan Dreibelbis
 # Course: CIS261
-# Week 5, Course Project Part 2 - Using Lists and Dictionaries to Store and Retrieve Data
+# Week 7, Course Project Part 3 - Using Lists and Dictionaries to Store and Retrieve Data
 
 FILENAME = "employee.txt"   # from|to|name|hours|rate|tax
 
