@@ -1,4 +1,4 @@
-# Name: Ka Yan Dreibelbis
+# Name:  Ka Yan Dreibelbis
 # Course: CIS261
 # Week 5, Course Project Part 2 - Using Lists and Dictionaries to Store and Retrieve Data
 
@@ -50,7 +50,7 @@ def main():
     from_dates, to_dates = [], []
     names, hours, rates, taxes = [], [], [], []
 
-    print("Payroll Program (enter at least 5 employees)\n")
+    print("Payroll Program (enter at least 2 employees)\n")
 
     while True:
         frm, to, stop = get_dates()  # must be first call in loop
