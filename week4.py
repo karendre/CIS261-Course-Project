@@ -3,10 +3,10 @@
 # Week 8 – Course Project Phase 4
 #
 #   users.txt      -> user_id|password|role
-#   employees.txt  -> from|to|name|hours|rate|tax
+#   employee.txt  -> from|to|name|hours|rate|tax
 
 USERS_FILE = "users.txt"
-EMP_FILE   = "employees.txt"
+EMP_FILE   = "employee.txt"
 
 # ---------- small helpers ----------
 def read_all(path):
@@ -169,7 +169,7 @@ def show_totals(t):
 def run_report():
     """
     Ask for FROM date or 'All'.
-    Read employees.txt and print matching rows then totals.
+    Read employeees.txt and print matching rows then totals.
     """
     rows = read_all(EMP_FILE)
     if not rows:
