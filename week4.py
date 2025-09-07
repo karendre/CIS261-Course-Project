@@ -2,8 +2,6 @@
 # Course: CIS261
 # Week 8 – Course Project Phase 4
 #
-# Phase 4 builds on Phase 3 by adding users, login, and authorization.
-# File formats (pipe-delimited):
 #   users.txt      -> user_id|password|role
 #   employees.txt  -> from|to|name|hours|rate|tax
 
